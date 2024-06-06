@@ -1,0 +1,3 @@
+id =xe03, name xecuanam, color=green, brand=vinfast, type=plane, price=868.0, year=2007
+id =xe01, name xecuaphuc, color=blue, brand=toyota, type=car, price=456.0, year=2005
+id =xe02, name xecuaxiu, color=green, brand=kimono, type=bike, price=204.0, year=2001
