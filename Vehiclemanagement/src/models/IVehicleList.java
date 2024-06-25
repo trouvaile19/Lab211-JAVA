@@ -2,7 +2,6 @@
 package models;
 
 import controllers.VehicleList;
-import java.util.Scanner;
 
 /**
  *

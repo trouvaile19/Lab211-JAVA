@@ -51,7 +51,7 @@ public class Vehicle implements Serializable { // chuyển đối tượng Vehic
     
     @Override
     public String toString() {
-        return "id =" + id + ", name " + name + ", color=" + color + ", brand=" + brand + ", type=" + type + ", price=" + price + ", year=" + year ;
+        return "id: " + id + ", name: " + name + ", color: " + color + ", brand: " + brand + ", type: " + type + ", price: " + price + ", year: " + year ;
     }
     
 }   
