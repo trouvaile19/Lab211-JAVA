@@ -22,5 +22,7 @@ public interface IBikeFunction {
     String [] readBrandFile();
     
     void header();
+    
+    void storagetxt();
 }
 

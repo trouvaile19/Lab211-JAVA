@@ -35,9 +35,13 @@ public class BikeList extends ArrayList<Bike> implements IBikeFunction {
             id = sc.nextLine();
             for (Bike bike : this) {
                 if (id.equals(bike.getId())) {
-                    System.out.println("This id has already existed!");
+                    System.out.println("-This id has already existed!-");
                     check = true;
                 }
+            }
+            if(id.isEmpty()){
+                System.out.println("-ID can not be blank-");
+                check = true;
             }
         } while (check);
 
@@ -60,12 +64,12 @@ public class BikeList extends ArrayList<Bike> implements IBikeFunction {
             boolean checkExist = false; 
             for (String readID : readBrandFile()) {
                 if(readID.equalsIgnoreCase(brandId)){
-                    System.out.println("    -This brandID already exists!-");
                     checkExist = true;
+                    break;
                 }
             }
-            if(!checkExist && brandId.matches("^B\\d{3}")) break;            
-            else System.out.println("-You must input correct brand id format!-");      
+            if(checkExist && brandId.matches("^B\\d{3}")) break;            
+            else System.out.println("-Incorrect format or not exist brand id-");      
         }
         while(true){
             System.out.println("Enter category ID <C***> (* is an number from 0 to 9): ");
@@ -74,12 +78,12 @@ public class BikeList extends ArrayList<Bike> implements IBikeFunction {
             boolean checkExist = false;
             for(String readId : readCategoryFile()){
                 if(readId.equalsIgnoreCase(categoryId)){
-                    System.out.println("   -This cateforyID already exists!-");
                     checkExist = true;
+                    break;
                 }
             }
-            if(!checkExist && categoryId.matches("^C\\d{3}")) break;
-            else System.out.println("-You must input correct categoryid format!-");
+            if(checkExist && categoryId.matches("^C\\d{3}")) break;
+            else System.out.println("-Incorrect format or not exist category id-");
         }
         while (true) {
             try {
@@ -329,11 +333,19 @@ public class BikeList extends ArrayList<Bike> implements IBikeFunction {
             return null;
         }
     }
-
+    
     @Override
     public void header() {
         System.out.println("|  ID |  Name  |Brand|Category|Year| Price |");
     }
 //        return String.format("|%5s|%8s|%5s|%5s|%4d|%5.2f|", id, name, brandId, categoryId, modelYear, listPrice);
 
+    @Override
+    public void storagetxt() {
+        System.out.println("\n\n\nAvailable BrandID: B001, B002, B003, B004, B005, B006, B007");
+        System.out.println("Available CategoryID: C001, C002, C003, C004, C005, C006, C007");
+    }
+
+
+    
 }

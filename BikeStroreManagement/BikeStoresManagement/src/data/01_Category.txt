@@ -3,4 +3,5 @@ C002, Hybrid Bike
 C003, Road Bike
 C004, Folding Bike
 C005, Electric Bike
-C006, Bye Bye
+C006, Phuc Bike
+C007, Bye Bye

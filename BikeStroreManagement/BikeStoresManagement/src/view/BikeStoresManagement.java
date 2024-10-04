@@ -10,6 +10,7 @@ public class BikeStoresManagement {
         IBikeFunction list = new BikeList();
         boolean isReturnMenu = true;
         while (isReturnMenu) {
+            list.storagetxt();
             menu();
             try {
                 Scanner sc = new Scanner(System.in);
@@ -41,10 +42,16 @@ public class BikeStoresManagement {
                             } while (isContinue(sc));
                             break;
                         case 5: // save to file
-                            list.saveToFile();
+                            do{
+                                list.saveToFile();
+                                contiOrNot();
+                            }while (isContinue(sc));
                             break;
                         case 6: // print all lists from file
-                            list.readProductsFile();
+                            do{
+                                list.readProductsFile();
+                                contiOrNot();
+                            }while(isContinue(sc));
                             break;
                         case 0:
                             System.out.println("Thank you & See you again!");
@@ -61,7 +68,7 @@ public class BikeStoresManagement {
     }
 
     public static void menu() {
-        System.out.println("\n ________________________________________");
+        System.out.println("________________________________________");
         System.out.println("|***Welcome to Bike Store Management*** |");
         System.out.println("| 1. Create a new product               |");
         System.out.println("| 2. Search product information by name |");
@@ -69,6 +76,7 @@ public class BikeStoresManagement {
         System.out.println("| 4. Delete product information         |");
         System.out.println("| 5. Save to file                       |");
         System.out.println("| 6. Print all lists from file          |");
+        System.out.println("| 7. Search product and count           |");
         System.out.println("| 0. Exit the program!                  |");
         System.out.println("|---------------------------------------|");
         System.out.println("     !REMEMBER TO SAVE TO FILE! (5)      ");
