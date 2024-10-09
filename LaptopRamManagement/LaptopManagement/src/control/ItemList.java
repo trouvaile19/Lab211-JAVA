@@ -1,21 +1,16 @@
 package control;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Collections;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.IRamList;
 import model.RAMItem;
 
@@ -33,20 +28,58 @@ public class ItemList extends ArrayList<RAMItem> implements IRamList{
         String code;
         String production_month_year;
         int quantity;
-        boolean isActive;
+        boolean isActive = true;
+        String bus = null;
+        String type = null;
                 
         while (true){
+            boolean validation = true;
             System.out.println("\nInput code (RAMx_y) <x and y (0->9)>: ");
             code = sc.nextLine();
             if(!code.matches("^RAM\\d+_\\d+$")){
                 System.out.println(ANSI_RED + "Incorrect format(RAMx_y)!" + ANSI_RESET);
-            }else break;
+                validation = false;
+            }
+            for (RAMItem it : this) {
+                if(it.getCode().equals(code)){
+                    System.out.println(ANSI_RED + "This code has already existed!" + ANSI_RESET);
+                    validation = false;
+                    break;
+                }
+            } 
+            if(validation) break;
         }
         
-        System.out.println("Input type: ");
-        String type = sc.nextLine();
-        System.out.println("Input bus: ");
-        String bus = sc.nextLine();
+        boolean check1 = true;
+        while(check1) {
+            System.out.println("Input type: ");
+            type = sc.nextLine();
+            String[] typeList = readTypeFile();
+            for (String s : typeList) {
+                if (s.equals(type)) {
+                    check1 = false;
+                    break;
+                }
+            }
+            if(check1){System.out.println(ANSI_RED + "The type doesn't exist!" + ANSI_RESET);}
+
+        } 
+        
+        boolean check2 = true; 
+        while(check2){
+            System.out.println("Input bus: ");
+            bus = sc.nextLine();
+            String[] busList = readSpeedFile();
+            for (String s : busList) {
+                if(s.equals(bus)) {
+                    check2 = false;
+                    break;
+                }            
+            }
+            if(check2) {System.out.println(ANSI_RED + "The type doesn't exist!" + ANSI_RESET);}
+
+        }
+        
         System.out.println("Input brand: ");
         String brand = sc.nextLine();
         
@@ -67,15 +100,7 @@ public class ItemList extends ArrayList<RAMItem> implements IRamList{
                 System.out.println(ANSI_RED + "Incorrect format(xx/zzzz)!" + ANSI_RESET);
             } else break;
         }
-        System.out.println("Do your want to active this Ram([Y]:yes; [N]: no): ");
-        String s = sc.nextLine();
-        if(s.equalsIgnoreCase("Y")){
-           isActive = true;
-            System.out.println(ANSI_GREEN + "Sucessfully active!" + ANSI_RESET );
-        }else{
-            isActive = false;
-            System.out.println(ANSI_RED + "Failed to active!" + ANSI_RESET);
-        }        
+        
         RAMItem item = new RAMItem(code, type, bus, brand, quantity, production_month_year, isActive);
         this.add(item);
 
@@ -86,9 +111,11 @@ public class ItemList extends ArrayList<RAMItem> implements IRamList{
         int count = 0;
         System.out.print("Enter the spectific type you want to search: ");
         String search = sc.nextLine();
+        System.out.println(ANSI_PURPLE + "| Code | Type |  MFG  |Quantity|" + ANSI_RESET);
+
         for (RAMItem item : this) {
             if(item.getType().equalsIgnoreCase(search)){
-                System.out.println(String.format("%s, %s, %s, %d", item.getCode(), item.getType(),
+                System.out.println(String.format("|%6s|%6s|%7s|%8d|", item.getCode(), item.getType(),
                         item.getProduction_month_year(), item.getQuantity()) );
                 count += 1;
             }
@@ -101,14 +128,16 @@ public class ItemList extends ArrayList<RAMItem> implements IRamList{
         int count = 0;
         System.out.println("Enter the spectific bus you want to search: ");
         String search = sc.nextLine();
+        System.out.println(ANSI_PURPLE + "| Code | Bus  |  MFG  |Quantity|" + ANSI_RESET);
+
         for (RAMItem item : this) {
             if(item.getBus().equalsIgnoreCase(search)){
-                System.out.println(String.format("%s, %s, %s, %d", item.getCode(), item.getBus(),
+                System.out.println(String.format("|%6s|%6s|%7s|%8d|", item.getCode(), item.getBus(),
                         item.getProduction_month_year(), item.getQuantity()) );
                 count += 1;
             }
         }
-        System.out.println(ANSI_YELLOW + count + " results to be found" + ANSI_RESET);
+        System.out.println(ANSI_YELLOW + count + " results were found" + ANSI_RESET);
     }
 
     @Override
@@ -116,12 +145,15 @@ public class ItemList extends ArrayList<RAMItem> implements IRamList{
         int count = 0;
         System.out.println("Enter the spectific brand you want to search: ");
         String search = sc.nextLine();
+        System.out.println(ANSI_PURPLE + "| Code |  Brand |  MFG  |Quantity|" + ANSI_RESET);
+
         for (RAMItem item : this) {
             if(item.getBrand().equalsIgnoreCase(search)){
-                System.out.println(String.format("%s, %s, %s, %d", item.getCode(), item.getBrand(),
+                System.out.println(String.format("|%6s|%8s|%7s|%8s|", item.getCode(), item.getBrand(),
                         item.getProduction_month_year(), item.getQuantity()) );
-                count += 1;
-            }
+                count += 1; //"|%6s|%6s|%6s|%8s|%8d|%7s|
+            } //        System.out.println( ANSI_PURPLE + "| Code | Type | Bus  |  Brand |Quantity|  MFG  |" + ANSI_RESET); 
+
         }
         System.out.println(ANSI_YELLOW + count + " results to be found" + ANSI_RESET);
     }
@@ -145,23 +177,18 @@ public class ItemList extends ArrayList<RAMItem> implements IRamList{
 
     @Override
     public void deleteItem() {
-        System.out.println("Are you sure to delete inactive items?");
-        System.out.print("Press [Y] to delete / Press [0] to cancel: ");
-        String confirm = sc.nextLine();
-        if(confirm.equalsIgnoreCase("Y")){
-            Iterator <RAMItem> it = this.iterator();
-            while(it.hasNext()) {
-                RAMItem item = it.next();
-                if(!item.isIsActive())    {it.remove();}
+        System.out.println("Enter code Ram to delete: ");
+        String search = sc.nextLine();
+        for (RAMItem it : this) {
+            if(it.getCode().equals(search)){
+                it.setIsActive(false);
             }
-            System.out.println(ANSI_GREEN + "Sucessfully deleted inactive items" + ANSI_RESET);
-        }else{
-            System.out.println(ANSI_GREEN + "Canceled to delete!" + ANSI_RESET);
         }
+        System.out.println(ANSI_RESET + "Sucessfully deleted and set this item inactive!" + ANSI_GREEN);
     }
 
     @Override
-    public void displayAll() {
+    public void displayAll() { //show all items
         int count = 0;
         header();
         for (RAMItem item : this) {
@@ -171,16 +198,69 @@ public class ItemList extends ArrayList<RAMItem> implements IRamList{
             }
         }
         if(count == 0) System.out.println(ANSI_RED + "                -EMPTY!-" + ANSI_RESET);
+        else   System.out.println(ANSI_YELLOW + count + " items were found" + ANSI_RESET);
+
+    }
+    
+        @Override
+    public void displayByType() {
+        int count = 0;
+        System.out.println("Enter your type's ram to display: ");
+        String s = sc.nextLine();
+        header();
+        
+        for (RAMItem it : this) {
+            if(it.getType().equalsIgnoreCase(s)){
+                System.out.println(it);
+                count += 1;
+            }
+        }
+        if(count == 0) System.out.println(ANSI_RED + "                -EMPTY!-" + ANSI_RESET);
+        else   System.out.println(ANSI_YELLOW + count + " items were found" + ANSI_RESET);
     }
 
     @Override
-    public void loadData() {
+    public void displayByBus() {
+        int count = 0;
+        System.out.println("Enter your bus's ram to display: ");
+        String s = sc.nextLine();
+        header();
+        
+        for (RAMItem it : this) {
+            if(it.getBus().equalsIgnoreCase(s)){
+                System.out.println(it);
+                count += 1;
+            }
+        }   
+        if(count == 0) System.out.println(ANSI_RED + "                -EMPTY!-" + ANSI_RESET);
+        else   System.out.println(ANSI_YELLOW + count + " items were found" + ANSI_RESET);
+    }
+
+    @Override
+    public void displayByBrand() {
+        int count = 0;
+        System.out.println("Enter your brand's ram to display: ");
+        String s = sc.nextLine();
+        header();
+        
+        for (RAMItem it : this) {
+            if(it.getBrand().equalsIgnoreCase(s)){
+                System.out.println(it);
+                count += 1;
+            }
+        }
+        if(count == 0) System.out.println(ANSI_RED + "                -EMPTY!-" + ANSI_RESET);
+        else   System.out.println(ANSI_YELLOW + count + " items were found" + ANSI_RESET);
+    }
+
+    @Override
+    public void loadData() { //load data from file
         String path = "src\\data\\items.dat";
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\data\\items.dat"))) {
             ArrayList<RAMItem> items = (ArrayList<RAMItem>) ois.readObject();
             this.addAll(items);
         }catch(IOException | ClassNotFoundException e){
-             System.out.println(ANSI_RED + "Failed to load!" + ANSI_RESET);
+             System.out.println(ANSI_RED + "Failed to load! " + e.getMessage()  + ANSI_RESET);
         }
     }
 
@@ -236,40 +316,73 @@ public class ItemList extends ArrayList<RAMItem> implements IRamList{
     }
 
     @Override
-    public void readTypeFile() {
+    public String[] readTypeFile() {
         String paths = "src\\data\\RamTypes.txt";
-        File file = new File(paths);
         try {
-            FileReader fr = new FileReader(file);
-            String line;
-            List<String> typeList = new ArrayList<>();
+            FileReader fr = new FileReader(paths);
             BufferedReader br = new BufferedReader(fr);
-            while((line = br.readLine()) != null){
-                typeList.add(line);
-            }
-            String[] types = new String[typeList.size()];
-            for(int i = 0; i < typeList.size(); i++){
-                String[] temp = typeList.get(i).trim().split(", ");
-                types[i] = temp[i]; 
-            }
-            
+            String line = br.readLine();
+            if(line != null ) return line.split(", ");
         } catch (FileNotFoundException ex) {
             System.out.println(ANSI_RED + "Failed to read!" + ANSI_RESET);
         } catch (IOException ex) {
             System.out.println(ANSI_RED + "Failed to read!" + ANSI_RESET);
         }
-        
+        return new String[0];
     }
 
     @Override
-    public void readSpeedFile() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String[] readSpeedFile() {
+        String paths = "src\\data\\BusSpeeds.txt";
+        try{
+            FileReader fr = new FileReader(paths);
+            BufferedReader br = new BufferedReader(fr);
+            String line = br.readLine();
+            if(line != null) return line.split(", ");
+        }catch(FileNotFoundException ex) {
+            System.out.println(ANSI_RED + "Failed to read!" + ANSI_RESET);
+        } catch (IOException ex) {
+            System.out.println(ANSI_RED + "Failed to read!" + ANSI_RESET);
+        }
+        return new String[0];
     }
-
+    
+    @Override
+    public void newFunction() {
+        Collections.sort(this, (RAMItem it1, RAMItem it2) -> {
+            return Integer.compare(Integer.parseInt(it2.getBus()), Integer.parseInt(it1.getBus()));
+        });
+        
+        System.out.println("Enter year: ");
+        int x = sc.nextInt();
+        
+        int i = 0;
+        int [] yearIT = new int[this.size()];
+        for (RAMItem it : this) {
+            String[] y = it.getProduction_month_year().split("/");
+            yearIT[i] = Integer.parseInt(y[1]);
+            i++;
+        }
+        int j = 0;
+        header();
+        for(RAMItem it : this){
+            if(x < yearIT[j]){
+                System.out.println(it);
+            }
+            j++;
+        }
+    }
+    
     @Override
     public void header() {
-        System.out.println( ANSI_PURPLE + "| Code | Type | Bus  |Brand |Quantity|  MFG  |" + ANSI_RESET); 
+        System.out.println( ANSI_PURPLE + "| Code | Type | Bus  |  Brand |Quantity|  MFG  |Active|" + ANSI_RESET); 
     }
     //       ("|%6s|%6s|%6s|%6s|%4d|%10s|", code, type, bus, brand, quantity, production_month_year);
+
+//        Collections.sort(this, (RAMItem it1, RAMItem it2 ) -> Integer.compare(Integer.parseInt(it1.getBus()), Integer.parseInt(it2.getBus())));
+//        header();
+//        for (RAMItem it : this) {
+//            System.out.println(it);
+//        }
 
 }

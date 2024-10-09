@@ -3,13 +3,14 @@ package model;
 import java.io.Serializable;
 
 public class RAMItem implements Serializable{
+
     private String code;
     private String type;
     private String bus;
     private String brand; 
     private int quantity;
     private String production_month_year;
-    private boolean isActive;
+    private boolean isActive = true;
 
     public RAMItem(String code, String type, String bus, String brand, int quantity, String production_month_year, boolean isActive) {
         this.code = code;
@@ -78,10 +79,11 @@ public class RAMItem implements Serializable{
         this.isActive = isActive;
     }
     
+    
 
     @Override
     public String toString() {
-        return String.format("|%6s|%6s|%6s|%6s|%8d|%7s|", code, type, bus, brand, quantity, production_month_year);
+            return String.format("|%6s|%6s|%6s|%8s|%8d|%7s|%6s|", code, type, bus, brand, quantity, production_month_year, isActive);
     }
     
     
