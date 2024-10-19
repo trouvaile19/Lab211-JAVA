@@ -1,0 +1,16 @@
+|C99  |Phuc         |offline  |hahah            |02/2012  |08/2019  |123.5    |
+|C05  |dataStruct   |online   |dataStructures   |03/2018  |06/2018  |850.0    |
+|C03  |java101      |online   |javaBeginner     |02/2019  |07/2019  |550.0    |
+|C10  |androidDev   |online   |androidBasics    |10/2019  |02/2020  |1400.0   |
+|C08  |sysDesign    |offline  |systemDesign     |01/2020  |06/2020  |4200.0   |
+|C04  |pythonPro    |offline  |pythonAdvanced   |05/2020  |11/2020  |2700.0   |
+|C11  |cyberSec     |offline  |cybersecurity    |06/2020  |12/2020  |5300.0   |
+|C09  |dataScience  |online   |dataScienceML    |07/2021  |12/2021  |2900.0   |
+|C06  |webDevBoot   |offline  |webDevelopment   |08/2021  |01/2022  |3500.0   |
+|C12  |blockChain   |online   |blockchainTech   |09/2021  |03/2022  |3500.0   |
+|C07  |AIbasics     |online   |AI Beginner      |11/2022  |04/2023  |1700.0   |
+|C13  |IoTbasics    |offline  |IoT foundation   |12/2022  |06/2023  |2900.0   |
+|C01  |machineLearn |offline  |machineLearning  |01/2023  |07/2023  |6800.0   |
+|C02  |cloudNative  |online   |cloudNativeDev   |07/2023  |01/2024  |2500.0   |
+|C25  |machineLearn |offline  |machineLearning  |01/2023  |07/2023  |6800.0   |
+|C26  |cloudNative  |online   |cloudNativeDev   |07/2023  |01/2024  |2500.0   |

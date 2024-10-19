@@ -1,0 +1,11 @@
+|L01 |Linhdan     |11/12/2004| 3.50|C01       |pass |
+|L02 |Lelinh      |11/10/2009| 3.10|C04       |pass |
+|L03 |Minhtri     |24/08/2005| 2.80|C07       |pass |
+|L04 |Tuananh     |05/02/2002| 3.95|C03       |pass |
+|L05 |Khaiviet    |13/03/2006| 3.45|C05       |pass |
+|L06 |Hoanglinh   |19/11/2008| 2.65|C06       |pass |
+|L07 |Anbinh      |23/09/2003| 3.75|C09       |pass |
+|L08 |Thutrang    |07/01/2007| 3.55|C08       |pass |
+|L09 |Hailong     |17/06/2004| 2.95|C02       |pass |
+|L10 |Minhphat    |11/07/2010| 3.10|C11       |pass |
+

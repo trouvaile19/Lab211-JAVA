@@ -1,0 +1,10 @@
+| T01 |   OOPBasics    |  long   | ObjectOriented   |    20    |
+| T02 |  DataAnalysis  |  short  |  Data Science    |    30    |
+| T03 |  WebSecurity   |  short  |  Web Protection  |    25    |
+| T04 |  MachineVision |  long   | Computer Vision  |    45    |
+| T05 | CloudServices  |  short  |  CloudPlatforms  |    35    |
+| T06 |   CyberOps     |  long   | CybersecurityOps |    50    |
+| T07 | BlockchainTech |  long   |  BlockchainTech  |    40    |
+| T08 |  AIAlgorithms  | short	 |    AI Models     |    30    |
+| T09 |   DevOpsTools  | long    |   DevOps Tools   |    25    |
+| T10 | FullStackDev   | short	 | FullStackSkills  |    60    |
